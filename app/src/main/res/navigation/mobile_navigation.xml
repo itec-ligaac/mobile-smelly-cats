@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.myapplication.fragments.HomeFragment"
+        android:name="com.example.myapplication.fragments.ProfileFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
@@ -20,13 +20,13 @@
 
     <fragment
         android:id="@+id/navigation_information"
-        android:name="com.example.myapplication.fragments.NotificationsFragment"
+        android:name="com.example.myapplication.fragments.TreasureHuntsFragment"
         android:label="@string/hunt_information"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.myapplication.fragments.NotificationsFragment"
+        android:name="com.example.myapplication.fragments.TreasureHuntsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

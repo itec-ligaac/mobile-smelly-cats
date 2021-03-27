@@ -3,9 +3,7 @@ package com.example.myapplication.fragments;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.myapplication.Activities.MainActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.helpers.ITreasureHuntStart;
 import com.example.myapplication.models.TreasureHuntType;
 import com.example.myapplication.services.PlatformPositioningProvider;
-import com.here.sdk.core.GeoBox;
-import com.here.sdk.core.GeoCircle;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.core.LanguageCode;
-import com.here.sdk.core.LocationListener;
 import com.here.sdk.core.Point2D;
 import com.here.sdk.core.errors.InstantiationErrorException;
 import com.here.sdk.gestures.TapListener;
@@ -41,20 +34,16 @@ import com.here.sdk.search.Place;
 import com.here.sdk.search.PlaceCategory;
 import com.here.sdk.search.SearchEngine;
 import com.here.sdk.search.SearchOptions;
-import com.here.sdk.search.TextQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.Context.LOCATION_SERVICE;
-
-public class MapFragment extends Fragment implements ITreasureHuntStart{
+public class MapFragment extends Fragment {
     private final int FINE_LOCATION_ACCESS_CODE = 9234;
     private MapView mapView;
     private GeoCoordinates timisoaraCoordinates = new GeoCoordinates(45.760696, 21.226788);
     private PlatformPositioningProvider platformPositioningProvider;
     private boolean locationServiceStarted;
-    private ITreasureHuntStart treasureHuntStart;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -65,16 +54,7 @@ public class MapFragment extends Fragment implements ITreasureHuntStart{
         mapView.setOnReadyListener(() -> {
         });
         loadMapScene();
-
         askForLocationPermission();
-        searchForCategories(TreasureHuntType.PARKS);
-
-        treasureHuntStart = new ITreasureHuntStart() {
-            @Override
-            public void startTreasureHunt(int type) {
-                searchForCategories(type);
-            }
-        };
         return root;
     }
 
@@ -146,7 +126,7 @@ public class MapFragment extends Fragment implements ITreasureHuntStart{
         });
     }
 
-    private void searchForCategories(int treasureHuntType) {
+    public void searchForCategories(int treasureHuntType) {
         List<PlaceCategory> categoryList = new ArrayList<>();
         switch (treasureHuntType){
             case TreasureHuntType.PARKS:
@@ -189,10 +169,5 @@ public class MapFragment extends Fragment implements ITreasureHuntStart{
 
     private void initializeViews(View root) {
         mapView = root.findViewById(R.id.map_view);
-    }
-
-    @Override
-    public void startTreasureHunt(int type) {
-
     }
 }

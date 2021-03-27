@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +39,7 @@ public class TreasureHuntAdapter extends RecyclerView.Adapter<TreasureHuntViewHo
             public boolean onLongClick(View v) {
                 treasureHunt.setStarted(true);
                 holder.setValues(treasureHunt.getName(), treasureHunt.getType(), true);
-                for (int i = 0; i < treasureHuntList.size(); i++ ) {
-                    TreasureHuntModel treasureHuntAux = treasureHuntList.get(i);
-                    holder.setValues(treasureHuntAux.getName(), treasureHuntAux.getType(), false);
-                }
+                treasureHuntStart.startTreasureHunt(treasureHunt.getType());
                 return false;
             }
         });

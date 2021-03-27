@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,21 +18,27 @@ import com.example.myapplication.models.TreasureHuntType;
 
 import java.util.ArrayList;
 
-public class NotificationsFragment extends Fragment {
+public class TreasureHuntsFragment extends Fragment {
     private RecyclerView treasureHuntsRv;
     private ArrayList<TreasureHuntModel> treasureHuntsList;
     private TreasureHuntAdapter treasureHuntAdapter;
     private ITreasureHuntStart treasureHuntStart;
+    HuntStarted mCallback;
+
+    public interface HuntStarted {
+        void onHuntStarted(int type);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         initializeViews(root);
         setMockers();
+        mCallback = (HuntStarted)getActivity();
         treasureHuntStart = new ITreasureHuntStart() {
             @Override
             public void startTreasureHunt(int type) {
-                int a = type;
+                mCallback.onHuntStarted(type);
             }
         };
         setRecyclerView();
@@ -42,7 +47,7 @@ public class NotificationsFragment extends Fragment {
 
     private void setMockers() {
         treasureHuntsList = new ArrayList<>();
-        treasureHuntsList.add(new TreasureHuntModel("Cool stuff", TreasureHuntType.CULTURE, true));
+        treasureHuntsList.add(new TreasureHuntModel("Cool stuff", TreasureHuntType.CULTURE, false));
         treasureHuntsList.add(new TreasureHuntModel("Recreations", TreasureHuntType.PARKS, false));
         treasureHuntsList.add(new TreasureHuntModel("AIurea mall", TreasureHuntType.SHOPPING, false));
     }
