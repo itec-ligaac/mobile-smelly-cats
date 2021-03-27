@@ -7,10 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.models.TreasureHuntType;
+import com.google.android.material.card.MaterialCardView;
 
 public class TreasureHuntViewHolder extends RecyclerView.ViewHolder {
     private TextView nameTv;
     private TextView typeTv;
+    private TextView statusTv;
+    private MaterialCardView containerMcv;
 
     public TreasureHuntViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,9 +23,11 @@ public class TreasureHuntViewHolder extends RecyclerView.ViewHolder {
     private void initializeViews(View itemView) {
         nameTv = itemView.findViewById(R.id.tv_row_treasure_hunt_name);
         typeTv = itemView.findViewById(R.id.tv_row_treasure_hunt_type);
+        statusTv = itemView.findViewById(R.id.tv_row_treasure_hunt_status);
+        containerMcv = itemView.findViewById(R.id.mcv_row_container);
     }
 
-    public void setValues(String name, int type){
+    public void setValues(String name, int type, boolean isStarted){
         nameTv.setText(name);
         switch (type){
             case TreasureHuntType.CULTURE:
@@ -38,5 +43,14 @@ public class TreasureHuntViewHolder extends RecyclerView.ViewHolder {
                 typeTv.setText("Default");
                 break;
         }
+        if (isStarted){
+            statusTv.setText("In Progress");
+            statusTv.setTextColor(itemView.getContext().getResources().getColor(R.color.pendingColor));
+            containerMcv.setStrokeColor(itemView.getContext().getResources().getColor(R.color.pendingColor));
+            return;
+        }
+        statusTv.setText("Start");
+        statusTv.setTextColor(itemView.getContext().getResources().getColor(R.color.inProgress));
+        containerMcv.setStrokeColor(itemView.getContext().getResources().getColor(R.color.inProgress));
     }
 }

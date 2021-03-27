@@ -31,7 +31,7 @@ public class TreasureHuntAdapter extends RecyclerView.Adapter<TreasureHuntViewHo
     @Override
     public void onBindViewHolder(@NonNull TreasureHuntViewHolder holder, int position) {
         TreasureHuntModel treasureHunt = treasureHuntList.get(position);
-        holder.setValues(treasureHunt.getName(), treasureHunt.getType());
+        holder.setValues(treasureHunt.getName(), treasureHunt.getType(), treasureHunt.isStarted());
         holder.itemView.setOnClickListener(v -> {
 
         });
