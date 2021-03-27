@@ -66,7 +66,6 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-
             <Button
                 android:id="@+id/btn_login_primary"
                 android:layout_width="match_parent"
@@ -87,11 +86,7 @@
                 android:text="SIGN UP"
                 android:onClick="OnRegister"
                 android:background="@color/colorPrimaryDark"
-                android:textColor="@color/colorWhite"
-                />
-
-            ></LinearLayout>
-
-        ></RelativeLayout>
-
+                android:textColor="@color/colorWhite"/>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

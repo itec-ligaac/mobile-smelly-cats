@@ -49,7 +49,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 >
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_name"
+                    android:id="@+id/et_personal_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"/>
@@ -93,7 +93,6 @@
                 android:stateListAnimator="@null"
                 android:layout_marginBottom="32dp"
                 android:text="CREATE ACCOUNT"
-                android:onClick="OnCreate"
                 android:background="@color/colorPrimaryDark"
                 android:textColor="@color/colorWhite"
                 />

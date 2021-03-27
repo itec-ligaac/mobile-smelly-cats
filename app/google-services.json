@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "355592070791",
+    "project_id": "treasurehunt-ad45b",
+    "storage_bucket": "treasurehunt-ad45b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355592070791:android:be32b6799ada8882e43a22",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355592070791-03v35gg6bheamkjj1irdsja6jh6upabh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDCpmhndlokinNHZ3GclODZp3yidSru6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355592070791-03v35gg6bheamkjj1irdsja6jh6upabh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
