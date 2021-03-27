@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.Activities.LoginActivity;
+import com.example.myapplication.Activities.MainActivity;
 import com.example.myapplication.R;
 
 public class HomeFragment extends Fragment {
@@ -16,7 +19,10 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
         return root;
+    }
+
+    public void OnLogOut(View view) {
+        startActivity(new Intent(getContext(), LoginActivity.class));
     }
 }
