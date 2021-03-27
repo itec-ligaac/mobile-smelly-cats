@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.helpers.DataStorageHelper;
+import com.example.myapplication.models.TreasureHuntItemModel;
 import com.example.myapplication.models.TreasureHuntType;
 import com.example.myapplication.services.PlatformPositioningProvider;
 import com.here.sdk.core.GeoCoordinates;
@@ -45,6 +46,9 @@ public class MapFragment extends Fragment {
     private GeoCoordinates timisoaraCoordinates = new GeoCoordinates(45.760696, 21.226788);
     private PlatformPositioningProvider platformPositioningProvider;
     private boolean locationServiceStarted;
+    private int currentItemPosition;
+    private boolean canStartLocation;
+    private MapImage mapImage;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +73,7 @@ public class MapFragment extends Fragment {
                 Log.d("tag", "Loading map failed: mapError: " + mapError.name());
             }
         });
-
+        mapImage = MapImageFactory.fromResource(getContext().getResources(), R.drawable.ic_location);
         setTapGestureHandler();
     }
 
@@ -81,14 +85,16 @@ public class MapFragment extends Fragment {
                     FINE_LOCATION_ACCESS_CODE
             );
         } else {
-            startLocationService();
+            if (canStartLocation){
+                startLocationService();
+            }
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (!locationServiceStarted){
+        if (!locationServiceStarted && canStartLocation){
             startLocationService();
         }
     }
@@ -122,9 +128,40 @@ public class MapFragment extends Fragment {
         platformPositioningProvider.startLocating(new PlatformPositioningProvider.PlatformLocationListener() {
             @Override
             public void onLocationUpdated(Location location) {
-                Toast.makeText(getContext(), "merge", Toast.LENGTH_SHORT).show();
+                checkIfMarkerCanBeAdded(location);
             }
         });
+    }
+
+    private void checkIfMarkerCanBeAdded(Location location){
+        TreasureHuntItemModel itemModel = DataStorageHelper.getInstance().outdoorHuntList().get(currentItemPosition);
+        if (checkCoordinatesForProximity(location.getLatitude(), itemModel.getCoordinates().latitude) && checkCoordinatesForProximity(location.getLongitude(), itemModel.getCoordinates().longitude)){
+            addNewMarker();
+        }
+        else{
+            int a = 0;
+        }
+    }
+
+    private void addNewMarker(){
+        MapMarker mapMarker = new MapMarker(DataStorageHelper.getInstance().outdoorHuntList().get(currentItemPosition).getCoordinates(), mapImage);
+        mapView.getMapScene().addMapMarker(mapMarker);
+        if (currentItemPosition == 7){
+            Toast.makeText(getContext(), "You've reached the end, congratulations!", Toast.LENGTH_SHORT).show();
+            platformPositioningProvider.stopLocating();
+            return;
+        }
+        currentItemPosition++;
+    }
+
+    private boolean checkCoordinatesForProximity(double currentCoordinates, double locationCoordinates){
+        return Math.abs(currentCoordinates - locationCoordinates) < 0.005;
+    }
+
+    @Override
+    public void onDestroy() {
+        platformPositioningProvider.stopLocating();
+        super.onDestroy();
     }
 
     public void searchForCategories(int treasureHuntType) {
@@ -166,9 +203,11 @@ public class MapFragment extends Fragment {
                 Log.d("tag 2", addressText);
             }
         });
-        MapImage mapImage = MapImageFactory.fromResource(getContext().getResources(), R.drawable.ic_location);
         MapMarker mapMarker = new MapMarker(DataStorageHelper.getInstance().outdoorHuntList().get(0).getCoordinates(), mapImage);
         mapView.getMapScene().addMapMarker(mapMarker);
+        currentItemPosition++;
+        canStartLocation = true;
+        startLocationService();
     }
 
     private void initializeViews(View root) {
