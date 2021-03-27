@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mapFragment = new MapFragment();
         homeFragment = new HomeFragment();
 
-        activeFragment = mapFragment;
+        activeFragment = homeFragment;
     }
 
 
