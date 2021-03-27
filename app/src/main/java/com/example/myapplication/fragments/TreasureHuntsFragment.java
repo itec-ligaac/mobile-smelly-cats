@@ -47,9 +47,9 @@ public class TreasureHuntsFragment extends Fragment {
 
     private void setMockers() {
         treasureHuntsList = new ArrayList<>();
-        treasureHuntsList.add(new TreasureHuntModel("Cool stuff", TreasureHuntType.CULTURE, false));
-        treasureHuntsList.add(new TreasureHuntModel("Recreations", TreasureHuntType.PARKS, false));
-        treasureHuntsList.add(new TreasureHuntModel("AIurea mall", TreasureHuntType.SHOPPING, false));
+        treasureHuntsList.add(new TreasureHuntModel("Culture trip", TreasureHuntType.CULTURE, false));
+        treasureHuntsList.add(new TreasureHuntModel("Outdoors", TreasureHuntType.PARKS, false));
+        treasureHuntsList.add(new TreasureHuntModel("Entertainment", TreasureHuntType.SHOPPING, false));
     }
 
     private void initializeViews(View root) {

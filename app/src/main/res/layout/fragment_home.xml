@@ -81,34 +81,9 @@
         android:layout_marginStart="20dp"
         android:layout_below="@+id/ll_email"
         android:layout_marginTop="20dp"
-        android:text="History: "
+        android:text="History: TBI"
         android:textAllCaps="true"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         />
-
-    <ListView
-        android:id="@+id/lv_historical"
-        android:layout_below="@+id/tv_historical"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:stateListAnimator="@null"
-        android:layout_marginBottom="32dp"
-        android:layout_below="@+id/lv_historical"
-        android:text="LOG OUT"
-        android:onClick="OnLogOut"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/colorWhite"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
-
 </RelativeLayout>

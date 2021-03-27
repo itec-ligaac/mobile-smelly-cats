@@ -15,7 +15,7 @@ import com.example.myapplication.fragments.ProfileFragment;
 import com.example.myapplication.fragments.TreasureHuntsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, TreasureHuntsFragment.HuntStarted {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, TreasureHuntsFragment.HuntStarted, MapFragment.FoundNewMarker {
     private MapFragment mapFragment;
     private ProfileFragment profileFragment;
     private TreasureHuntsFragment treasureHuntsFragment;
@@ -81,5 +81,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onHuntStarted(int type) {
         mapFragment.searchForCategories(type);
+        huntInformationFragment.addHuntInfo(0);
+    }
+
+    @Override
+    public void onMarkerFound(int position) {
+        huntInformationFragment.addHuntInfo(position);
     }
 }

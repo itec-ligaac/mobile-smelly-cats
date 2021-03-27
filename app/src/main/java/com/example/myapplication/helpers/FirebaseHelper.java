@@ -9,7 +9,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class FirebaseHelper {
     private static FirebaseHelper firebaseHelper;
-    static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     public DatabaseReference usersDatabase = firebaseDatabase.getReference("users");
     public FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     public FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -21,5 +21,9 @@ public class FirebaseHelper {
             firebaseHelper = new FirebaseHelper();
         }
         return firebaseHelper;
+    }
+
+    public FirebaseHelper(){
+
     }
 }

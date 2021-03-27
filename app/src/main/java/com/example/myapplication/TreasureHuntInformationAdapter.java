@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.helpers.DataStorageHelper;
 import com.example.myapplication.helpers.ITreasureHuntStart;
 import com.example.myapplication.models.TreasureHuntItemModel;
 import com.example.myapplication.models.TreasureHuntModel;
@@ -37,7 +38,7 @@ public class TreasureHuntInformationAdapter extends RecyclerView.Adapter<Treasur
     @Override
     public void onBindViewHolder(@NonNull TreasureHuntInformationViewHolder holder, int position) {
         TreasureHuntItemModel treasureHunt = itemsList.get(position);
-        status = (position+1) + "/" + itemsList.size();
+        status = (position+1) + "/" + DataStorageHelper.getInstance().outdoorHuntList().size();
         holder.setValues(status, treasureHunt.getPlaceDescription(), treasureHunt.getNextClue());
     }
 

@@ -49,12 +49,18 @@ public class MapFragment extends Fragment {
     private int currentItemPosition;
     private boolean canStartLocation;
     private MapImage mapImage;
+    private FoundNewMarker mCallback;
+
+    public interface FoundNewMarker {
+        void onMarkerFound(int position);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_map, container, false);
         initializeViews(root);
         mapView.onCreate(savedInstanceState);
+        mCallback = (FoundNewMarker)getActivity();
 
         mapView.setOnReadyListener(() -> {
         });
@@ -138,14 +144,12 @@ public class MapFragment extends Fragment {
         if (checkCoordinatesForProximity(location.getLatitude(), itemModel.getCoordinates().latitude) && checkCoordinatesForProximity(location.getLongitude(), itemModel.getCoordinates().longitude)){
             addNewMarker();
         }
-        else{
-            int a = 0;
-        }
     }
 
     private void addNewMarker(){
         MapMarker mapMarker = new MapMarker(DataStorageHelper.getInstance().outdoorHuntList().get(currentItemPosition).getCoordinates(), mapImage);
         mapView.getMapScene().addMapMarker(mapMarker);
+        mCallback.onMarkerFound(currentItemPosition);
         if (currentItemPosition == 7){
             Toast.makeText(getContext(), "You've reached the end, congratulations!", Toast.LENGTH_SHORT).show();
             platformPositioningProvider.stopLocating();
@@ -205,8 +209,8 @@ public class MapFragment extends Fragment {
         });
         MapMarker mapMarker = new MapMarker(DataStorageHelper.getInstance().outdoorHuntList().get(0).getCoordinates(), mapImage);
         mapView.getMapScene().addMapMarker(mapMarker);
-        currentItemPosition++;
         canStartLocation = true;
+        currentItemPosition++;
         startLocationService();
     }
 

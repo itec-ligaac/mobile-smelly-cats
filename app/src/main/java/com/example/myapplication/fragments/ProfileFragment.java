@@ -18,18 +18,25 @@ import com.example.myapplication.models.UserModel;
 
 public class ProfileFragment extends Fragment {
 
+    private TextView nameTv;
+    private TextView emailTv;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        setValues(DataStorageHelper.getInstance().getCurrentUser());
         initializeViews(root);
+        setValues(DataStorageHelper.getInstance().getCurrentUser());
         return root;
     }
 
     private void initializeViews(View root) {
+        emailTv = root.findViewById(R.id.tv_email_export);
+        nameTv = root.findViewById(R.id.tv_full_name_export);
     }
 
     private void setValues(UserModel currentUser) {
+        emailTv.setText(currentUser.getEmail());
+        nameTv.setText(currentUser.getNume());
     }
 
     public void OnLogOut(View view) {

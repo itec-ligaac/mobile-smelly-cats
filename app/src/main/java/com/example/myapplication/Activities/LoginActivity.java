@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserModel myUser = dataSnapshot.getValue(UserModel.class);
                 DataStorageHelper.getInstance().setCurrentUser(myUser);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -76,8 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         userEmail = emailEt.getText().toString();
         userPassword = passwordEt.getText().toString();
         firebaseLogin(userEmail, userPassword);
-
-        startActivity(new Intent(LoginActivity.this,MainActivity.class));
     }
 
     public void OnRegister(View view) {
