@@ -18,7 +18,7 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class PlatformPositioningProvider implements LocationListener {
     public static final String LOG_TAG = PlatformPositioningProvider.class.getName();
-    public static final int LOCATION_UPDATE_INTERVAL_IN_MS = 500;
+    public static final int LOCATION_UPDATE_INTERVAL_IN_MS = 5000;
 
     private Context context;
     private LocationManager locationManager;
@@ -85,9 +85,9 @@ public class PlatformPositioningProvider implements LocationListener {
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
                 context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 1,this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 0,this);
         } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 1,this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 0,this);
         } else {
             Log.d(LOG_TAG, "Positioning not possible.");
             stopLocating();

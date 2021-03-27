@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments;
 
+import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -11,11 +12,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.Activities.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.models.TreasureHuntType;
 import com.example.myapplication.services.PlatformPositioningProvider;
+import com.here.sdk.core.GeoBox;
 import com.here.sdk.core.GeoCircle;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.core.LanguageCode;
@@ -31,6 +35,7 @@ import com.here.sdk.search.Place;
 import com.here.sdk.search.PlaceCategory;
 import com.here.sdk.search.SearchEngine;
 import com.here.sdk.search.SearchOptions;
+import com.here.sdk.search.TextQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +43,13 @@ import java.util.List;
 import static android.content.Context.LOCATION_SERVICE;
 
 public class MapFragment extends Fragment {
+    private final int FINE_LOCATION_ACCESS_CODE = 9234;
     private MapView mapView;
     private GeoCoordinates timisoaraCoordinates = new GeoCoordinates(45.760696, 21.226788);
-    private final int LOCATION_UPDATE_INTERVAL_IN_MS = 10000;
+    private GeoCoordinates timisoaraNECoordinates = new GeoCoordinates(45.7789, 21.1910);
+    private GeoCoordinates timisoaraSWCoordinates = new GeoCoordinates(45.7142, 21.2686);
     private PlatformPositioningProvider platformPositioningProvider;
+    private boolean locationServiceStarted;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,14 +59,9 @@ public class MapFragment extends Fragment {
 
         mapView.setOnReadyListener(() -> {
         });
-        platformPositioningProvider = new PlatformPositioningProvider(getContext());
         loadMapScene();
-        platformPositioningProvider.startLocating(new PlatformPositioningProvider.PlatformLocationListener() {
-            @Override
-            public void onLocationUpdated(Location location) {
-                Toast.makeText(getContext(), "merge", Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        askForLocationPermission();
         //searchForCategories();
         return root;
     }
@@ -76,28 +79,51 @@ public class MapFragment extends Fragment {
     }
 
     private void askForLocationPermission(){
-//        try {
-//            consentEngine = new ConsentEngine();
-//        } catch (InstantiationErrorException e) {
-//            throw new RuntimeException("Initialization of ConsentEngine failed: " + e.getMessage());
-//        }
-//
-//// Check if user consent has been handled.
-//        if (consentEngine.getUserConsentState() == Consent.UserReply.NOT_HANDLED) {
-//
-//            // Show dialog.
-//            consentEngine.requestUserConsent();
-//        }
-
-// The execution can continue while the dialog is being shown.
-
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions( //Method of Fragment
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION},
+                    FINE_LOCATION_ACCESS_CODE
+            );
+        } else {
+            startLocationService();
+        }
     }
 
-    private void searchForCategories() {
-        List<PlaceCategory> categoryList = new ArrayList<>();
-        categoryList.add(new PlaceCategory(PlaceCategory.NATURAL_AND_GEOGRAPHICAL));
-        GeoCircle geoCircle = new GeoCircle(timisoaraCoordinates, 10000);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (!locationServiceStarted){
+            startLocationService();
+        }
+    }
 
+    private void startLocationService(){
+        platformPositioningProvider = new PlatformPositioningProvider(getContext());
+        locationServiceStarted = true;
+        platformPositioningProvider.startLocating(new PlatformPositioningProvider.PlatformLocationListener() {
+            @Override
+            public void onLocationUpdated(Location location) {
+                Toast.makeText(getContext(), "merge", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void searchForCategories(int treasureHuntType) {
+        List<PlaceCategory> categoryList = new ArrayList<>();
+        switch (treasureHuntType){
+            case TreasureHuntType.PARKS:
+                categoryList.add(new PlaceCategory(PlaceCategory.NATURAL_AND_GEOGRAPHICAL));
+                break;
+            case TreasureHuntType.CULTURE:
+                categoryList.add(new PlaceCategory(PlaceCategory.GOING_OUT_THEATRE_MUSIC_CULTURE));
+                break;
+                case TreasureHuntType.SHOPPING:
+                categoryList.add(new PlaceCategory(PlaceCategory.SHOPPING));
+                break;
+            default:
+                break;
+        }
         CategoryQuery categoryQuery = new CategoryQuery(categoryList, timisoaraCoordinates);
         SearchEngine searchEngine;
         try {
@@ -106,9 +132,11 @@ public class MapFragment extends Fragment {
             throw new RuntimeException("Initialization of SearchEngine failed: " + e.error.name());
         }
 
+//        GeoBox viewportGeoBox = new GeoBox(timisoaraNECoordinates, timisoaraSWCoordinates);
+//        TextQuery query = new TextQuery("pizza", viewportGeoBox);
+
         int maxItems = 50;
         SearchOptions searchOptions = new SearchOptions(LanguageCode.EN_US, maxItems);
-
         searchEngine.search(categoryQuery, searchOptions, (searchError, list) -> {
             if (searchError != null) {
                 return;

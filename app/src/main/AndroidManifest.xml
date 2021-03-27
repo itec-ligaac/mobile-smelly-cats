@@ -34,6 +34,10 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name="Platform"
+            android:enabled="true" />
+
         <meta-data android:name="com.here.sdk.access_key_id" android:value="rJZM8ZWNmYar0DfwKd3A5Q" />
         <meta-data android:name="com.here.sdk.access_key_secret" android:value="FjDlenBDvsgsZ1LdGjLV23UzaiYVCHxwS6Q2mSxCiEy569TzTHfvNPB6PIPy9lngkokaWjrNd8wvrlVbnfSKnw" />
     </application>

@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private void LoadFragment() {
         fragmentManager.beginTransaction().add(R.id.nav_host_fragment, notificationsFragment, "3").hide(notificationsFragment).commit();
-        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, mapFragment, "2").commit();
+        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, mapFragment, "2").hide(mapFragment).commit();
         fragmentManager.beginTransaction().add(R.id.nav_host_fragment, homeFragment, "1").commit();
     }
 
