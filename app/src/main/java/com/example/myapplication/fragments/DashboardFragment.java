@@ -21,7 +21,6 @@ import com.here.sdk.search.Place;
 import com.here.sdk.search.PlaceCategory;
 import com.here.sdk.search.SearchEngine;
 import com.here.sdk.search.SearchOptions;
-import com.here.sdk.search.TextQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +54,28 @@ public class DashboardFragment extends Fragment {
         });
     }
 
+    private void askForLocationPermission(){
+//        try {
+//            consentEngine = new ConsentEngine();
+//        } catch (InstantiationErrorException e) {
+//            throw new RuntimeException("Initialization of ConsentEngine failed: " + e.getMessage());
+//        }
+//
+//// Check if user consent has been handled.
+//        if (consentEngine.getUserConsentState() == Consent.UserReply.NOT_HANDLED) {
+//
+//            // Show dialog.
+//            consentEngine.requestUserConsent();
+//        }
+
+// The execution can continue while the dialog is being shown.
+
+    }
+
     private void searchForCategories() {
         List<PlaceCategory> categoryList = new ArrayList<>();
         categoryList.add(new PlaceCategory(PlaceCategory.NATURAL_AND_GEOGRAPHICAL));
         GeoCircle geoCircle = new GeoCircle(timisoaraCoordinates, 10000);
-        TextQuery query = new TextQuery(geoCircle, );
 
         CategoryQuery categoryQuery = new CategoryQuery(categoryList, timisoaraCoordinates);
         SearchEngine searchEngine;
