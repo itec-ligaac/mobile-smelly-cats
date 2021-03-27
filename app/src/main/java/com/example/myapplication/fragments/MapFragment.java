@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.helpers.DataStorageHelper;
 import com.example.myapplication.models.TreasureHuntType;
 import com.example.myapplication.services.PlatformPositioningProvider;
 import com.here.sdk.core.GeoCoordinates;
@@ -165,6 +166,9 @@ public class MapFragment extends Fragment {
                 Log.d("tag 2", addressText);
             }
         });
+        MapImage mapImage = MapImageFactory.fromResource(getContext().getResources(), R.drawable.ic_location);
+        MapMarker mapMarker = new MapMarker(DataStorageHelper.getInstance().outdoorHuntList().get(0).getCoordinates(), mapImage);
+        mapView.getMapScene().addMapMarker(mapMarker);
     }
 
     private void initializeViews(View root) {

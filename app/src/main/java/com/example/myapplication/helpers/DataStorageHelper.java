@@ -34,9 +34,8 @@ public class DataStorageHelper {
     }
 
     public ArrayList<TreasureHuntItemModel> outdoorHuntList(){
-
         ArrayList<TreasureHuntItemModel> list = new ArrayList<>();
-        list.add(new TreasureHuntItemModel(100, "Timisoara is a city you can fall in love with. Here are some unique things you should know about it.", "First stop: Central Park", new GeoCoordinates(45.7528703, 21.2333356)));
+        list.add(new TreasureHuntItemModel(100, "Timisoara is a city you can fall in love with. Here are some unique things you should know about it.", "First stop: Central Park", new GeoCoordinates(45.751611, 21.2200748)));
         list.add(new TreasureHuntItemModel(101, "Congratulations! Alley of Personalities is an open-air museum, where 24 bronze busts are exhibited: from Carol Robert de Anjou, who established his capital in Timisoara, to army commanders, mayors who contributed to the development of the city, as well as doctors , engineers, writers, musicians and visual artists.", "2.\tTimisoara was the first European city, and the second after New York globally, to introduce electric street lighting. It happened in 1884. Next stop: Roses Park", new GeoCoordinates(45.7503068, 21.2302278)));
         list.add(new TreasureHuntItemModel(102, "Congratulations! In 1944 the park was destroyed by bombing. After the Second World War, the park was rebuilt, with various outdoor shows.", "3.\tTimisoara was also the first city in Europe to have a tram. It was inaugurated on July 8, 1869, was made of wood in Vienna and operated horse-drawn. 15 people could move easily with his help. Next stop: Ion Creangă Children’s Park", new GeoCoordinates(45.7503068, 21.2302278)));
         list.add(new TreasureHuntItemModel(103, "Congratulations! According to some historical data, the development of this park began about 160 years ago. In 1987, a series of radical changes took place that lead to the fulfillment of the functions of recreation and play of children.", "4.\tTimisoara is the largest city in the west of the country, with a population of about 400,000 inhabitants. Next stop: Parcul Poporului (Regina Maria)", new GeoCoordinates(45.7567, 21.2424413)));
