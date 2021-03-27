@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.Activities.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.helpers.ITreasureHuntStart;
 import com.example.myapplication.models.TreasureHuntType;
 import com.example.myapplication.services.PlatformPositioningProvider;
 import com.here.sdk.core.GeoBox;
@@ -24,12 +26,16 @@ import com.here.sdk.core.GeoCircle;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.core.LanguageCode;
 import com.here.sdk.core.LocationListener;
+import com.here.sdk.core.Point2D;
 import com.here.sdk.core.errors.InstantiationErrorException;
+import com.here.sdk.gestures.TapListener;
 import com.here.sdk.mapview.MapImage;
 import com.here.sdk.mapview.MapImageFactory;
 import com.here.sdk.mapview.MapMarker;
 import com.here.sdk.mapview.MapScheme;
 import com.here.sdk.mapview.MapView;
+import com.here.sdk.mapview.MapViewBase;
+import com.here.sdk.mapview.PickMapItemsResult;
 import com.here.sdk.search.CategoryQuery;
 import com.here.sdk.search.Place;
 import com.here.sdk.search.PlaceCategory;
@@ -42,14 +48,13 @@ import java.util.List;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements ITreasureHuntStart{
     private final int FINE_LOCATION_ACCESS_CODE = 9234;
     private MapView mapView;
     private GeoCoordinates timisoaraCoordinates = new GeoCoordinates(45.760696, 21.226788);
-    private GeoCoordinates timisoaraNECoordinates = new GeoCoordinates(45.7789, 21.1910);
-    private GeoCoordinates timisoaraSWCoordinates = new GeoCoordinates(45.7142, 21.2686);
     private PlatformPositioningProvider platformPositioningProvider;
     private boolean locationServiceStarted;
+    private ITreasureHuntStart treasureHuntStart;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +67,14 @@ public class MapFragment extends Fragment {
         loadMapScene();
 
         askForLocationPermission();
-        //searchForCategories();
+        searchForCategories(TreasureHuntType.PARKS);
+
+        treasureHuntStart = new ITreasureHuntStart() {
+            @Override
+            public void startTreasureHunt(int type) {
+                searchForCategories(type);
+            }
+        };
         return root;
     }
 
@@ -76,6 +88,8 @@ public class MapFragment extends Fragment {
                 Log.d("tag", "Loading map failed: mapError: " + mapError.name());
             }
         });
+
+        setTapGestureHandler();
     }
 
     private void askForLocationPermission(){
@@ -96,6 +110,29 @@ public class MapFragment extends Fragment {
         if (!locationServiceStarted){
             startLocationService();
         }
+    }
+
+    private void setTapGestureHandler() {
+        mapView.getGestures().setTapListener(new TapListener() {
+            @Override
+            public void onTap(Point2D touchPoint) {
+                pickMapMarker(touchPoint);
+            }
+        });
+    }
+
+    private void pickMapMarker(final Point2D touchPoint) {
+        float radiusInPixel = 2;
+        mapView.pickMapItems(touchPoint, radiusInPixel, new MapViewBase.PickMapItemsCallback() {
+            @Override
+            public void onPickMapItems(@NonNull PickMapItemsResult pickMapItemsResult) {
+                List<MapMarker> mapMarkerList = pickMapItemsResult.getMarkers();
+                if (mapMarkerList.size() == 0) {
+                    return;
+                }
+                MapMarker topmostMapMarker = mapMarkerList.get(0);
+            }
+        });
     }
 
     private void startLocationService(){
@@ -132,9 +169,6 @@ public class MapFragment extends Fragment {
             throw new RuntimeException("Initialization of SearchEngine failed: " + e.error.name());
         }
 
-//        GeoBox viewportGeoBox = new GeoBox(timisoaraNECoordinates, timisoaraSWCoordinates);
-//        TextQuery query = new TextQuery("pizza", viewportGeoBox);
-
         int maxItems = 50;
         SearchOptions searchOptions = new SearchOptions(LanguageCode.EN_US, maxItems);
         searchEngine.search(categoryQuery, searchOptions, (searchError, list) -> {
@@ -155,5 +189,10 @@ public class MapFragment extends Fragment {
 
     private void initializeViews(View root) {
         mapView = root.findViewById(R.id.map_view);
+    }
+
+    @Override
+    public void startTreasureHunt(int type) {
+
     }
 }

@@ -19,6 +19,12 @@
         tools:layout="@layout/fragment_map" />
 
     <fragment
+        android:id="@+id/navigation_information"
+        android:name="com.example.myapplication.fragments.NotificationsFragment"
+        android:label="@string/hunt_information"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.myapplication.fragments.NotificationsFragment"
         android:label="@string/title_notifications"

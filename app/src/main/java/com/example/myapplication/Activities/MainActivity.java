@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.fragments.HuntInformationFragment;
 import com.example.myapplication.fragments.MapFragment;
 import com.example.myapplication.fragments.HomeFragment;
 import com.example.myapplication.fragments.NotificationsFragment;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private MapFragment mapFragment;
     private HomeFragment homeFragment;
     private NotificationsFragment notificationsFragment;
+    private HuntInformationFragment huntInformationFragment;
     private BottomNavigationView navView;
     private Fragment activeFragment;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -45,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 activeFragment = mapFragment;
                 return true;
 
+            case R.id.navigation_information:
+                fragmentManager.beginTransaction().hide(activeFragment).show(huntInformationFragment).commit();
+                activeFragment = huntInformationFragment;
+                return true;
+
             case R.id.navigation_notifications:
                 fragmentManager.beginTransaction().hide(activeFragment).show(notificationsFragment).commit();
                 activeFragment = notificationsFragment;
@@ -54,8 +61,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void LoadFragment() {
-        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, notificationsFragment, "3").hide(notificationsFragment).commit();
-        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, mapFragment, "2").hide(mapFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, notificationsFragment, "4").hide(notificationsFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, mapFragment, "3").hide(mapFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, huntInformationFragment, "2").hide(huntInformationFragment).commit();
         fragmentManager.beginTransaction().add(R.id.nav_host_fragment, homeFragment, "1").commit();
     }
 
@@ -63,11 +71,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navView = findViewById(R.id.nav_view);
 
         notificationsFragment = new NotificationsFragment();
+        huntInformationFragment = new HuntInformationFragment();
         mapFragment = new MapFragment();
         homeFragment = new HomeFragment();
 
         activeFragment = homeFragment;
     }
-
-
 }
