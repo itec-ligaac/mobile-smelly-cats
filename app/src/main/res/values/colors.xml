@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#282828</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorAccent">#ffffff</color>
-    <color name="resolvedColor">#519be0</color>
-    <color name="pendingColor">#d42906</color>
-    <color name="inProgress">#519be0</color>
+    <color name="resolvedColor">#aaaaaa</color>
+    <color name="pendingColor">#eeb726</color>
+    <color name="inProgress">#282828</color>
 </resources>

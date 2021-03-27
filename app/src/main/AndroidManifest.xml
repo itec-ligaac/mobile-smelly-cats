@@ -22,10 +22,10 @@
         android:roundIcon="@drawable/ic_sigla_alb"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.RegisterActivity"></activity>
+        <activity android:name=".Activities.RegisterActivity"/>
         <activity android:name=".Activities.LoginActivity" />
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".Activities.MainActivity"
             android:label="Discover the city">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -81,7 +81,7 @@
         android:layout_marginStart="20dp"
         android:layout_below="@+id/ll_email"
         android:layout_marginTop="20dp"
-        android:text="Historical: "
+        android:text="History: "
         android:textAllCaps="true"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"

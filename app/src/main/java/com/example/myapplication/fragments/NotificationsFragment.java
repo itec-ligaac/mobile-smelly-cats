@@ -34,9 +34,9 @@ public class NotificationsFragment extends Fragment {
 
     private void setMockers() {
         treasureHuntsList = new ArrayList<>();
-        treasureHuntsList.add(new TreasureHuntModel("Culture", TreasureHuntType.CULTURE, true));
-        treasureHuntsList.add(new TreasureHuntModel("Parks", TreasureHuntType.PARKS, false));
-        treasureHuntsList.add(new TreasureHuntModel("Shopping", TreasureHuntType.SHOPPING, false));
+        treasureHuntsList.add(new TreasureHuntModel("Cool stuff", TreasureHuntType.CULTURE, true));
+        treasureHuntsList.add(new TreasureHuntModel("Recreations", TreasureHuntType.PARKS, false));
+        treasureHuntsList.add(new TreasureHuntModel("AIurea mall", TreasureHuntType.SHOPPING, false));
     }
 
     private void initializeViews(View root) {

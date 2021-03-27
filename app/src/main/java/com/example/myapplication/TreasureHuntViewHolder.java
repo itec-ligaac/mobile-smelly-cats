@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ public class TreasureHuntViewHolder extends RecyclerView.ViewHolder {
     private TextView typeTv;
     private TextView statusTv;
     private MaterialCardView containerMcv;
+    private ImageView iconIv;
 
     public TreasureHuntViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -25,19 +27,26 @@ public class TreasureHuntViewHolder extends RecyclerView.ViewHolder {
         typeTv = itemView.findViewById(R.id.tv_row_treasure_hunt_type);
         statusTv = itemView.findViewById(R.id.tv_row_treasure_hunt_status);
         containerMcv = itemView.findViewById(R.id.mcv_row_container);
+        iconIv = itemView.findViewById(R.id.iv_row_treasure_hunt_logo);
     }
 
     public void setValues(String name, int type, boolean isStarted){
         nameTv.setText(name);
         switch (type){
             case TreasureHuntType.CULTURE:
-                typeTv.setText("Culture");
+                typeTv.setText("Museums");
+                nameTv.setText("Culture");
+                iconIv.setImageResource(R.drawable.ic_culture);
                 break;
             case TreasureHuntType.PARKS:
                 typeTv.setText("Parks");
+                nameTv.setText("Outdoors");
+                iconIv.setImageResource(R.drawable.ic_outdoor);
                 break;
             case TreasureHuntType.SHOPPING:
-                typeTv.setText("Shopping");
+                typeTv.setText("Shops, Restaurants,Bars");
+                nameTv.setText("Entertainment");
+                iconIv.setImageResource(R.drawable.ic_entertainment);
                 break;
             default:
                 typeTv.setText("Default");
