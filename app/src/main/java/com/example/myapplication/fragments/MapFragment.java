@@ -159,7 +159,7 @@ public class MapFragment extends Fragment {
     }
 
     private boolean checkCoordinatesForProximity(double currentCoordinates, double locationCoordinates){
-        return Math.abs(currentCoordinates - locationCoordinates) < 0.005;
+        return Math.abs(currentCoordinates - locationCoordinates) <= 0.005;
     }
 
     @Override

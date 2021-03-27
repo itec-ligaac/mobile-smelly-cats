@@ -35,6 +35,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setValues(UserModel currentUser) {
+        if (currentUser == null){
+            currentUser = new UserModel("213", "john@discover.city", "John Smith");
+        }
         emailTv.setText(currentUser.getEmail());
         nameTv.setText(currentUser.getNume());
     }
