@@ -16,7 +16,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.helpers.DataStorageHelper;
 import com.example.myapplication.models.UserModel;
 
-public class HomeFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

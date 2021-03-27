@@ -11,14 +11,14 @@ import androidx.fragment.app.FragmentManager;
 import com.example.myapplication.R;
 import com.example.myapplication.fragments.HuntInformationFragment;
 import com.example.myapplication.fragments.MapFragment;
-import com.example.myapplication.fragments.HomeFragment;
-import com.example.myapplication.fragments.NotificationsFragment;
+import com.example.myapplication.fragments.ProfileFragment;
+import com.example.myapplication.fragments.TreasureHuntsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, TreasureHuntsFragment.HuntStarted {
     private MapFragment mapFragment;
-    private HomeFragment homeFragment;
-    private NotificationsFragment notificationsFragment;
+    private ProfileFragment profileFragment;
+    private TreasureHuntsFragment treasureHuntsFragment;
     private HuntInformationFragment huntInformationFragment;
     private BottomNavigationView navView;
     private Fragment activeFragment;
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit();
-                activeFragment = homeFragment;
+                fragmentManager.beginTransaction().hide(activeFragment).show(profileFragment).commit();
+                activeFragment = profileFragment;
                 return true;
 
             case R.id.navigation_dashboard:
@@ -53,28 +53,33 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
 
             case R.id.navigation_notifications:
-                fragmentManager.beginTransaction().hide(activeFragment).show(notificationsFragment).commit();
-                activeFragment = notificationsFragment;
+                fragmentManager.beginTransaction().hide(activeFragment).show(treasureHuntsFragment).commit();
+                activeFragment = treasureHuntsFragment;
                 return true;
         }
         return false;
     }
 
     private void LoadFragment() {
-        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, notificationsFragment, "4").hide(notificationsFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, treasureHuntsFragment, "4").hide(treasureHuntsFragment).commit();
         fragmentManager.beginTransaction().add(R.id.nav_host_fragment, mapFragment, "3").hide(mapFragment).commit();
         fragmentManager.beginTransaction().add(R.id.nav_host_fragment, huntInformationFragment, "2").hide(huntInformationFragment).commit();
-        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, homeFragment, "1").commit();
+        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, profileFragment, "1").commit();
     }
 
-    public void initializeViews() {
+    private void initializeViews() {
         navView = findViewById(R.id.nav_view);
 
-        notificationsFragment = new NotificationsFragment();
+        treasureHuntsFragment = new TreasureHuntsFragment();
         huntInformationFragment = new HuntInformationFragment();
         mapFragment = new MapFragment();
-        homeFragment = new HomeFragment();
+        profileFragment = new ProfileFragment();
 
-        activeFragment = homeFragment;
+        activeFragment = profileFragment;
+    }
+
+    @Override
+    public void onHuntStarted(int type) {
+        mapFragment.searchForCategories(type);
     }
 }
