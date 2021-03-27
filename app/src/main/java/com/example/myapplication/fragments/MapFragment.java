@@ -1,18 +1,25 @@
 package com.example.myapplication.fragments;
 
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.Activities.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.services.PlatformPositioningProvider;
 import com.here.sdk.core.GeoCircle;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.core.LanguageCode;
+import com.here.sdk.core.LocationListener;
 import com.here.sdk.core.errors.InstantiationErrorException;
 import com.here.sdk.mapview.MapImage;
 import com.here.sdk.mapview.MapImageFactory;
@@ -28,9 +35,13 @@ import com.here.sdk.search.SearchOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 public class MapFragment extends Fragment {
     private MapView mapView;
     private GeoCoordinates timisoaraCoordinates = new GeoCoordinates(45.760696, 21.226788);
+    private final int LOCATION_UPDATE_INTERVAL_IN_MS = 10000;
+    private PlatformPositioningProvider platformPositioningProvider;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,8 +51,15 @@ public class MapFragment extends Fragment {
 
         mapView.setOnReadyListener(() -> {
         });
+        platformPositioningProvider = new PlatformPositioningProvider(getContext());
         loadMapScene();
-        searchForCategories();
+        platformPositioningProvider.startLocating(new PlatformPositioningProvider.PlatformLocationListener() {
+            @Override
+            public void onLocationUpdated(Location location) {
+                Toast.makeText(getContext(), "merge", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //searchForCategories();
         return root;
     }
 
