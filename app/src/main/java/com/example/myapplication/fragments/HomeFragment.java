@@ -13,13 +13,23 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.Activities.LoginActivity;
 import com.example.myapplication.Activities.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.helpers.DataStorageHelper;
+import com.example.myapplication.models.UserModel;
 
 public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        setValues(DataStorageHelper.getInstance().getCurrentUser());
+        initializeViews(root);
         return root;
+    }
+
+    private void initializeViews(View root) {
+    }
+
+    private void setValues(UserModel currentUser) {
     }
 
     public void OnLogOut(View view) {
