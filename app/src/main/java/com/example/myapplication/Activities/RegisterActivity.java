@@ -10,7 +10,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.UserModel;
+import com.example.myapplication.helpers.DataStorageHelper;
+import com.example.myapplication.models.UserModel;
 import com.example.myapplication.helpers.FirebaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,7 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initializeViews();
-        mAuth = FirebaseHelper.getInstance().firebaseAuth;
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,14 +69,15 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
         GetValues();
-        mAuth.createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(RegisterActivity.this, "Successful registration", Toast.LENGTH_LONG).show();
-                    mUser = mAuth.getCurrentUser();
+                    mUser = FirebaseAuth.getInstance().getCurrentUser();
                     user = new UserModel(mUser.getUid(), userEmail, userName);
                     writeNewUser();
+                    DataStorageHelper.getInstance().setCurrentUser(user);
                     Intent myIntent = new Intent(RegisterActivity.this,LoginActivity.class);
                     startActivity(myIntent);
                     finish();
