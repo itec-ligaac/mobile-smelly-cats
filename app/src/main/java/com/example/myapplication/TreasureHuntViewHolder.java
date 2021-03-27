@@ -13,9 +13,9 @@ import com.google.android.material.card.MaterialCardView;
 public class TreasureHuntViewHolder extends RecyclerView.ViewHolder {
     private TextView nameTv;
     private TextView typeTv;
-    private TextView statusTv;
     private MaterialCardView containerMcv;
     private ImageView iconIv;
+    public TextView statusTv;
 
     public TreasureHuntViewHolder(@NonNull View itemView) {
         super(itemView);

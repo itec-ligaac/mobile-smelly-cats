@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.TreasureHuntAdapter;
+import com.example.myapplication.helpers.ITreasureHuntStart;
 import com.example.myapplication.models.TreasureHuntModel;
 import com.example.myapplication.models.TreasureHuntType;
 
@@ -22,12 +23,19 @@ public class NotificationsFragment extends Fragment {
     private RecyclerView treasureHuntsRv;
     private ArrayList<TreasureHuntModel> treasureHuntsList;
     private TreasureHuntAdapter treasureHuntAdapter;
-    
+    private ITreasureHuntStart treasureHuntStart;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         initializeViews(root);
         setMockers();
+        treasureHuntStart = new ITreasureHuntStart() {
+            @Override
+            public void startTreasureHunt(int type) {
+                int a = type;
+            }
+        };
         setRecyclerView();
         return root;
     }
@@ -45,7 +53,7 @@ public class NotificationsFragment extends Fragment {
 
     private void setRecyclerView() {
         treasureHuntsRv.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        treasureHuntAdapter = new TreasureHuntAdapter(treasureHuntsList);
+        treasureHuntAdapter = new TreasureHuntAdapter(treasureHuntsList, treasureHuntStart);
         treasureHuntsRv.setAdapter(treasureHuntAdapter);
     }
 }
