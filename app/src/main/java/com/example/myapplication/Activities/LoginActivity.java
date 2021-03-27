@@ -1,20 +1,19 @@
 package com.example.myapplication.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.R;
+import com.example.myapplication.helpers.DataStorageHelper;
 import com.example.myapplication.helpers.FirebaseHelper;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.myapplication.models.UserModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,9 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextInputEditText emailEt;
-    private TextInputLayout emailTil;
     private TextInputEditText passwordEt;
-    private TextInputLayout passwordTil;
     private String userEmail;
     private String userPassword;
 
@@ -61,11 +58,8 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseHelper.getInstance().usersDatabase.child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                /*StudentModel myUser = dataSnapshot.getValue(StudentModel.class);
-                UserHelper.Instance().setStudent(myUser);
-                UserHelper.Instance().setFirebaseUser(mAuth.getCurrentUser());
-                UserHelper.Instance().getStudent().setUserId(mAuth.getCurrentUser().getUid());
-                UserHelper.Instance().setLoggedIn(true);*/
+                UserModel myUser = dataSnapshot.getValue(UserModel.class);
+                DataStorageHelper.getInstance().setCurrentUser(myUser);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
