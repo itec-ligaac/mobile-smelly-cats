@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/mcv_row_container"
     android:layout_marginBottom="10dp"
     app:cardCornerRadius="6dp"
     android:background="@android:color/white"
@@ -44,5 +45,16 @@
             android:layout_toEndOf="@+id/iv_row_treasure_hunt_logo"
             android:layout_alignBottom="@+id/iv_row_treasure_hunt_logo"
             android:text="Testorum"/>
+
+        <TextView
+            android:id="@+id/tv_row_treasure_hunt_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#333333"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="In progress"/>
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

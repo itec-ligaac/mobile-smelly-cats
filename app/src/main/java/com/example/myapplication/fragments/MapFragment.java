@@ -14,6 +14,9 @@ import com.here.sdk.core.GeoCircle;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.core.LanguageCode;
 import com.here.sdk.core.errors.InstantiationErrorException;
+import com.here.sdk.mapview.MapImage;
+import com.here.sdk.mapview.MapImageFactory;
+import com.here.sdk.mapview.MapMarker;
 import com.here.sdk.mapview.MapScheme;
 import com.here.sdk.mapview.MapView;
 import com.here.sdk.search.CategoryQuery;
@@ -25,13 +28,13 @@ import com.here.sdk.search.SearchOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DashboardFragment extends Fragment {
+public class MapFragment extends Fragment {
     private MapView mapView;
     private GeoCoordinates timisoaraCoordinates = new GeoCoordinates(45.760696, 21.226788);
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_map, container, false);
         initializeViews(root);
         mapView.onCreate(savedInstanceState);
 
@@ -92,10 +95,13 @@ public class DashboardFragment extends Fragment {
             if (searchError != null) {
                 return;
             }
+            MapImage mapImage = MapImageFactory.fromResource(getContext().getResources(), R.drawable.ic_pin);
 
             // If error is null, list is guaranteed to be not empty.
             for (Place searchResult : list) {
                 String addressText = searchResult.getAddress().addressText;
+                MapMarker mapMarker = new MapMarker(searchResult.getGeoCoordinates(), mapImage);
+                mapView.getMapScene().addMapMarker(mapMarker);
                 Log.d("tag 2", addressText);
             }
         });

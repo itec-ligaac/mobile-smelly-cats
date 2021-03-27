@@ -6,4 +6,5 @@
     <color name="colorAccent">#ffffff</color>
     <color name="resolvedColor">#519be0</color>
     <color name="pendingColor">#d42906</color>
+    <color name="inProgress">#519be0</color>
 </resources>

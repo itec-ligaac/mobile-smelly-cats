@@ -1,9 +1,7 @@
 package com.example.myapplication.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,13 +9,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.myapplication.R;
-import com.example.myapplication.fragments.DashboardFragment;
+import com.example.myapplication.fragments.MapFragment;
 import com.example.myapplication.fragments.HomeFragment;
 import com.example.myapplication.fragments.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
-    private DashboardFragment dashboardFragment;
+    private MapFragment mapFragment;
     private HomeFragment homeFragment;
     private NotificationsFragment notificationsFragment;
     private BottomNavigationView navView;
@@ -43,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
 
             case R.id.navigation_dashboard:
-                fragmentManager.beginTransaction().hide(activeFragment).show(dashboardFragment).commit();
-                activeFragment = dashboardFragment;
+                fragmentManager.beginTransaction().hide(activeFragment).show(mapFragment).commit();
+                activeFragment = mapFragment;
                 return true;
 
             case R.id.navigation_notifications:
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private void LoadFragment() {
         fragmentManager.beginTransaction().add(R.id.nav_host_fragment, notificationsFragment, "3").hide(notificationsFragment).commit();
-        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, dashboardFragment, "2").commit();
+        fragmentManager.beginTransaction().add(R.id.nav_host_fragment, mapFragment, "2").commit();
         fragmentManager.beginTransaction().add(R.id.nav_host_fragment, homeFragment, "1").commit();
     }
 
@@ -65,10 +63,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navView = findViewById(R.id.nav_view);
 
         notificationsFragment = new NotificationsFragment();
-        dashboardFragment = new DashboardFragment();
+        mapFragment = new MapFragment();
         homeFragment = new HomeFragment();
 
-        activeFragment = dashboardFragment;
+        activeFragment = mapFragment;
     }
 
 
