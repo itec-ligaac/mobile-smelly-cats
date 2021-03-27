@@ -16,15 +16,13 @@ import java.util.ArrayList;
 
 public class TreasureHuntInformationAdapter extends RecyclerView.Adapter<TreasureHuntInformationViewHolder> {
     private ArrayList<TreasureHuntItemModel> itemsList;
-    private ITreasureHuntStart iTreasureHuntStart;
     private String status;
     private String placeDescription;
     private String nextClue;
     private GeoCoordinates coordinates;
 
-    public TreasureHuntInformationAdapter(ArrayList<TreasureHuntItemModel> itemsList, ITreasureHuntStart iTreasureHuntStart){
+    public TreasureHuntInformationAdapter(ArrayList<TreasureHuntItemModel> itemsList){
         this.itemsList = itemsList;
-        this.iTreasureHuntStart = iTreasureHuntStart;
     }
 
     @NonNull
