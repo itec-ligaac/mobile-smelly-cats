@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myapplication">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_sigla_alb"
+        android:label="Discover the City"
+        android:roundIcon="@drawable/ic_sigla_alb"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activities.RegisterActivity"/>
+        <activity android:name=".Activities.LoginActivity" />
+        <activity
+            android:name=".Activities.MainActivity"
+            android:label="Discover the city">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data android:name="com.here.sdk.access_key_id" android:value="rJZM8ZWNmYar0DfwKd3A5Q" />
+        <meta-data android:name="com.here.sdk.access_key_secret" android:value="FjDlenBDvsgsZ1LdGjLV23UzaiYVCHxwS6Q2mSxCiEy569TzTHfvNPB6PIPy9lngkokaWjrNd8wvrlVbnfSKnw" />
+    </application>
+</manifest>

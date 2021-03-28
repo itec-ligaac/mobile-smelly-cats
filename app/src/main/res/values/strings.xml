@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_home">Profile</string>
+    <string name="title_dashboard">Map</string>
+    <string name="title_notifications">Hunts</string>
+    <string name="hunt_information">Hunt Info</string>
+</resources>
